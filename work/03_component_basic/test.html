@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div id="example1"></div>
+    <div id="example2"></div>
+
+    <script src="../react_js/react.development.js"></script>
+    <script src="../react_js/react-dom.development.js"></script>
+    <script src="../react_js/babel.min.js"></script>
+
+    <script type="text/babel">
+        //1. 定义组件
+        //方式1：工厂函数组件（简单组件）   //“简单组件”指的是“没有state(状态)的组件”
+        function MyComponent () {
+            return <h2> 工厂函数组件（简单组件）</h2>;
+        }
+        //方式2：ES6类组件（复杂组件）
+        class MyComponent2 extends React.Component{
+            render(){
+                console.log(this);
+                return <h2>ES6类组件（复杂组件）</h2>;
+            }
+        }
+
+        //2. 渲染组件标签 到 真实DOM容器中
+        ReactDOM.render(<MyComponent/>, document.getElementById('example1'));
+        ReactDOM.render(<MyComponent2/>,document.getElementById('example2'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div id="example1"></div>
+    <div id="example2"></div>
+
+    <script src="../react_js/react.development.js"></script>
+    <script src="../react_js/react-dom.development.js"></script>
+    <script src="../react_js/babel.min.js"></script>
+
+    <script type="text/babel">
+        /**
+         * 重点：（1）state的3个操作：1.初始化状态  2.读取状态  3.更新状态
+         *       （2）将新增方法中的this强制绑定为组件对象：this.新增方法 = this.新增方法.bind(this);
+         */
+        /**
+         * 需求：自定义组件，功能说明如下：
+         *    1. 显示h2标题，初始文本为：你喜欢我
+         *    2. 点击标题更新为：我喜欢你
+         */
+        //1. 定义组件
+        class Like extends React.Component{
+
+            constructor( props ){
+                super(props);
+                //初始化状态
+                this.state = {
+                    isLikeMe: false
+                };
+
+                //将新增方法中的this强制绑定为组件对象（方式一）
+                //调用bind(this)方法： 1.返回一个新方法 2.给新方法指定了this  3.原方法不变
+                // 所以需要将 新方法 赋值给 原方法
+                 this.handleClick = this.handleClick.bind(this);
+            }
+
+            // 新添加方法：内部的this默认不是组件对象，而是undefined
+            handleClick(){
+                console.log('handleClick()',this);
+                //得到状态并取反
+                const isLikeMe = !this.state.isLikeMe;
+                //更新状态
+                // this.setState({isLikeMe: isLikeMe});
+                this.setState({isLikeMe});
+            }
+
+            // 重写组件类的方法
+            render(){
+                // 读取状态
+                // const isLikeMe = this.state.isLikeMe;
+                const {isLikeMe} = this.state;
+                return <h2 onClick={this.handleClick}>{isLikeMe ? '你喜欢我':'我喜欢你'}</h2>;
+
+                //将新增方法中的this强制绑定为组件对象（方式二） ：此方式效率低
+                // return <h2 onClick={this.handleClick.bind(this)}>{isLikeMe ? '你喜欢我':'我喜欢你'}</h2>;
+            }
+        }
+        //2. 渲染组件标签到真实DOM容器中
+        ReactDOM.render(<Like/>, document.getElementById('example1'));
+    </script>
+
+</body>
+</html>
