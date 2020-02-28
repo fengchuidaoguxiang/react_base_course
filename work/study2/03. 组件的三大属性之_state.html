@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>state</title>
+</head>
+<body>
+    <div id="box"></div>
+    <script src="../react_js/react.development.js"></script>
+    <script src="../react_js/react-dom.development.js"></script>
+    <script src="../react_js/babel.min.js"></script>
+
+    <script type="text/babel">
+        class App extends React.Component{
+
+            state = {
+                isLike: true
+            };
+            // state = {
+            //     data: '初始化的数据'
+            // };
+
+            constructor(props){
+                super(props);
+                // this.state = {
+                //     data: '初始化的数据'
+                // }
+            }
+            // test = ()=>{}
+
+            componentDidMount(){
+                console.log('-------componentDidMount-------');
+                console.log(this);
+                // 1, 修改状态方式：this.setState()   this = 组件的实例对象
+
+                setTimeout( () => { // 定时器的this是window
+                    this.setState({
+                        data:'修改以后的数据',
+                        newData: '我是新添加的数据'
+                    });
+                },1000)
+            }
+
+            handleClick(){
+                console.log(this);
+                console.log('handleClick');
+                this.setState({
+                    isLike: !this.state.isLike
+                });
+            }
+
+            // 渲染虚拟DOM对象
+            render(){
+                this.xxx = this.handleClick.bind(this);
+
+                console.log('本对象：',this);
+                console.log(this.state);
+                let {isLike} = this.state;
+                let str = isLike ? '贾静雯喜欢我' : '我喜欢贾静雯';
+                return (
+                    <div>
+                        <p onClick={this.xxx}>{str}</p>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(<App/>, document.getElementById('box'));
+    </script>
+
+</body>
+</html>

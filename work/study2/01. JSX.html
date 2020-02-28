@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSX</title>
+</head>
+<body>
+    <div id="box">
+
+    </div>
+    <div id="box2">
+
+    </div>
+    <script src="../react_js/react.development.js"></script>
+    <script src="../react_js/react-dom.development.js"></script>
+    <script src="../react_js/babel.min.js"></script>
+
+    <script type="text/babel" >
+        console.log(React);
+        console.log(ReactDOM);
+
+        let str = '我是子元素';
+        let childNode = <div>{str}</div>; // 虚拟DOM对象
+        let testChild = document.createElement('h1');
+        document.getElementById('box').appendChild(testChild);
+
+        ReactDOM.render(childNode, document.getElementById('box2'));
+    </script>
+</body>
+</html>

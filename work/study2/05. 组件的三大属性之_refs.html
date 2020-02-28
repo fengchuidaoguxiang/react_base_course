@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>refs</title>
+</head>
+<body>
+    <div id="box"></div>
+    <script src="../react_js/react.development.js"></script>
+    <script src="../react_js/react-dom.development.js"></script>
+    <script src="../react_js/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        // let refs = React.createRef();
+        // console.log(refs);
+
+        class App extends React.Component{
+            myRefs = React.createRef(); // {current: DOM对象}
+
+            constructor(props){
+                super(props);
+            }
+
+            handleClick = () => {
+              // 1. 获取输入框的内容
+              let value = this.refs.inputDOM.value;
+              // 2. 提示内容
+              alert(value);
+            };
+
+            handleBlur = (event) => {
+                console.log(this.myRefs.current.value);
+                alert(event.target.value);
+            };
+
+            render(){
+                return (
+                    <div>
+                        <input id="inputDOM" ref="inputDOM" type="text" placeholder="点击按钮提示内容"/>
+                        <button id="btn" onClick={this.handleClick}>点我一下</button>
+                        <input ref={this.myRefs} onBlur={this.handleBlur} type="text" placeholder="失去焦点提示内容"/>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(<App/>, document.getElementById("box"));
+        // document.getElementById('btn').onclick = function(){
+        //     alert('xxxx');
+        // };
+    </script>
+
+</body>
+</html>

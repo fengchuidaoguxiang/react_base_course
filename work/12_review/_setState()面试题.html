@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>state</title>
+</head>
+<body>
+    <div id="box"></div>
+    <script src="../react_js/react.development.js"></script>
+    <script src="../react_js/react-dom.development.js"></script>
+    <script src="../react_js/babel.min.js"></script>
+
+    <script type="text/babel">
+        class StateTest extends React.Component{
+
+            state = {
+                count: 0
+            };
+
+            componentDidMount(){
+                this.setState({count: this.state.count + 1});
+                this.setState({count: this.state.count + 1});
+                console.log(this.state.count); // 2 ==> 0
+
+                this.setState( state => ( {count: state.count + 1} ) );
+                this.setState( state => ( {count: state.count + 1} ));
+                console.log(this.state.count);// 3 ==> 0
+
+                setTimeout( () => {
+                    this.setState({count: this.state.count + 1});
+                    console.log('timeout', this.state.count);
+
+                    this.setState({count: this.state.count + 1});
+                    console.log('timeout', this.state.count);
+                },0);
+
+                Promise.resolve().then(value => {
+                    this.setState({count: this.state.count + 1});
+                    console.log('promise', this.state.count); // 6 ==> 4
+
+                    this.setState({count: this.state.count + 1});
+                    console.log('promise', this.state.count); // 8 ==> 5
+                });
+            }
+
+            render(){
+                const count = this.state.count;
+                console.log('render', count); // 1 ==> 0    // 4 ==> 3
+                return (
+                    <div>
+                        <p>{count}</p>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<StateTest />, document.getElementById('box'));
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组合使用</title>
+</head>
+<body>
+    <div id="box"></div>
+    <script src="../react_js/react.development.js"></script>
+    <script src="../react_js/react-dom.development.js"></script>
+    <script src="../react_js/babel.min.js"></script>
+
+    <script type="text/babel">
+        class App extends React.Component { // application
+            state = {
+               todosArr: ['吃饭','睡觉','打豆豆'],
+                num: 1234
+            };
+            constructor(props){
+                super(props);
+                console.log(props);
+            }
+            add = ( todoContent ) => {
+                console.log(todoContent);
+                // 1. 修改todosArr的状态
+                let todosArr = [todoContent, ...this.state.todosArr];
+                this.setState({
+                    todosArr
+                });
+            }
+            render(){
+                return (
+                    <div>
+                        <h1>Simple TODO List</h1>
+                        <AddTodo add={this.add}/>
+                        <TodoList todosArr={this.state.todosArr} num={this.state.num}/>
+                    </div>
+                )
+            }
+        }
+
+        class AddTodo extends React.Component {
+            constructor(props){
+                super(props);
+                console.log(props);
+            }
+            addTodo = () =>{
+                // 1. 收集数据
+                let todoContent = this.refs.todoContent.value;
+                // 2. 将数据交给App组件
+                this.props.add( todoContent );
+                // 3. 清空输入框的内容
+                this.refs.todoContent.value = '';
+            };
+            render(){
+                return (
+                    <div>
+                        <input ref="todoContent" type="text"/>
+                        <button onClick={this.addTodo}>添加</button>
+                    </div>
+                )
+            }
+        }
+
+        class TodoList extends React.Component {
+            constructor(props){
+                super(props);
+                console.log(props);
+            }
+            render(){
+                let { todosArr } = this.props;
+                // todosArr.push(123);
+                this.props.todosArr.push(123);
+                //this.props.todosArr = 123;
+                // this.props.num = 234;
+                return (
+                    <div>
+                        <ul>
+                            {
+                                todosArr.map( (item, index) => <li key={index}>{item}</li> )
+                            }
+                        </ul>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<App/>, document.getElementById("box"));
+    </script>
+
+</body>
+</html>

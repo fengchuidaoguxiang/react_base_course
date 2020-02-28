@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>初始组件</title>
+    <style>
+        h1{
+            font-size: 40px;
+            color: red;
+        }
+        h2{
+            font-size: 36px;
+            color: blue;
+        }
+        p{
+            font-size: 34px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>h1标题</h1>
+    <h2>h2标题</h2>
+    <p>我是p标签</p>
+    <hr>
+    <div id="box1"></div>
+    <div id="box2">
+        <p>我是原有的内容</p>
+    </div>
+    <script src="../react_js/react.development.js"></script>
+    <script src="../react_js/react-dom.development.js"></script>
+    <script src="../react_js/babel.min.js"></script>
+
+    <script type="text/babel">
+        // 1. 定义组件的方式一 : 工厂函数模式（不常用）
+        function App1() {
+            return <h1>h1标题</h1>
+        }
+
+        // 2. 定义组件的方式二 ：class类的方式（常用）
+        class App2 extends React.Component{ // 自定义的组件 继承 React的核心组件类
+            constructor(){
+                super(); // 调用父类的构造方法
+            }
+            render(){
+                // return <h2>h2标题</h2>
+                return (
+                    <div>
+                        <h1>h1标题</h1>
+                        <h2>h2标题</h2>
+                    </div>
+                );
+            }
+        }
+
+
+        ReactDOM.render(<App1 />, document.getElementById('box1'));
+        ReactDOM.render(<App2 />, document.getElementById('box2'));
+
+    </script>
+
+</body>
+</html>

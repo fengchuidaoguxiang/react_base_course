@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件的生命周期</title>
+</head>
+<body>
+    <div id="box"></div>
+    <script src="../react_js/react.development.js"></script>
+    <script src="../react_js/react-dom.development.js"></script>
+    <script src="../react_js/babel.min.js"></script>
+
+    <script type="text/babel">
+        class App extends React.Component{
+            state = {
+                opacity: 1
+            }
+            constructor( props ){
+                super(props);
+                console.log('------- constructor 构造方法----------');
+            }
+
+            componentWillMount(){
+                console.log('------- componentWillMount 将要挂载----------');
+                // 发送ajax请求、开启定时器。。。
+                // 尽量不要在这发送请求，或者放置运算量特别大的代码段，会导致首屏渲染时间延长，用户体验差
+                //console.log(this.state);
+            }
+
+            componentDidMount(){
+                console.log('------- componentDidMount 挂载完毕----------');
+                // （优先）发送ajax请求、开启定时器。。。
+                //console.log(this.state);
+                // 发送ajax请求、开启定时器。。。
+                // for (var i = 0; i < 100000; i++){
+                //     console.log(i);
+                // }
+
+                this.intervalId = setInterval( () => {
+                    let opacity = this.state.opacity;
+                    opacity -= 0.1;
+                    console.log(opacity);
+                    this.setState({
+                        opacity
+                    })
+                }, 200)
+            }
+
+            shouldComponentUpdate( nextProps, nextState ){
+                console.log('------- shouldComponentUpdate 组件是否应该更新----------');
+                console.log(nextState);
+                if(nextState.opacity < 0.1){
+                    this.setState({
+                        opacity: 1
+                    });
+                    //  必须要返回一个布尔值：
+                    return false;
+                }else {
+                    return true;
+                }
+            }
+
+            componentWillUpdate(){
+                console.log('------- componentWillUpdate 将要更新----------');
+            }
+
+            componentDidUpdate(){
+                console.log('------- componentDidUpdate 更新完毕----------');
+            }
+
+            componentWillUnmount(){
+                console.log('------- componentWillUnmount 将要卸载----------');
+            }
+
+            handleUnMount = () => {
+                ReactDOM.unmountComponentAtNode(document.getElementById('box'));
+                // 1. 销毁组件实例对象，释放内存
+                // 2. 将之前放入页面容器的DOM对象从html页面中移除
+                clearInterval(this.intervalId);
+            }
+            render(){
+                console.log('------- render 渲染方法----------');
+                let {opacity} = this.state;
+                return (
+                    <div>
+                        <h1 style={{opacity}}>贾静雯喜欢我???</h1>
+                        <button onClick={this.handleUnMount}>想得美</button>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<App/>, document.getElementById("box"));
+    </script>
+
+</body>
+</html>

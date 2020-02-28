@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>props</title>
+</head>
+<body>
+    <div id="box"></div>
+    <hr>
+    <div id="box2"></div>
+
+    <script src="../react_js/react.development.js"></script>
+    <script src="../react_js/react-dom.development.js"></script>
+    <script src="../react_js/babel.min.js"></script>
+
+    <script type="text/babel">
+        class App extends React.Component{
+            constructor(props){
+                super(props);
+            }
+
+            componentDidMount(){
+                console.log(this);
+            }
+
+            render(){
+                let {obj} = this.props;
+                return (
+                    <div>
+                        <p>姓名：{obj.name}</p>
+                        <p>性别：{obj.sex}</p>
+                        <p>年龄：{obj.age}</p>
+                    </div>
+                );
+            }
+        }
+
+        let obj = {
+            name: 'kobe',
+            age: 42,
+            sex: '男'
+        };
+
+        class App2 extends React.Component{
+            constructor(props){
+                super(props);
+            }
+
+            componentDidMount(){
+                console.log(this);
+            }
+
+            render(){
+                let {name, age, sex} = this.props;
+                return (
+                    <div>
+                        <p>姓名：{name}</p>
+                        <p>性别：{sex}</p>
+                        <p>年龄：{age}</p>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(<App obj={obj}/>, document.getElementById('box'));
+        ReactDOM.render(<App2 {...obj}/>, document.getElementById('box2'));
+    </script>
+
+</body>
+</html>
